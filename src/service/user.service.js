@@ -3,11 +3,7 @@ const connections = require("../app/database");
 class UserService {
   async create(username, password, sex) {
     const statement = `INSERT INTO user (name,password,sex) VALUES (?,?,?)`;
-    const [result] = await connections.execute(statement, [
-      username,
-      password,
-      sex,
-    ]);
+    const [result] = await connections.execute(statement, [username, password, sex]);
     return result;
   }
   async getUserList(userId) {

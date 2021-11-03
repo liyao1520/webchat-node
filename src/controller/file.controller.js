@@ -24,13 +24,16 @@ class FileController {
     const userId = ctx.params.userId;
     //从数据库中得到头像信息
     const avatarInfo = await fileService.getAvatarById(userId);
+    let avatarPath;
     if (!avatarInfo) {
-      return (ctx.body = {
-        status: 404,
-        msg: "没有找到该用户的头像信息",
-      });
-    }
-    const avatarPath = `${AVATAR_PATH}/${avatarInfo.filename}`;
+      // return (ctx.body = {
+      //   status: 404,
+      //   msg: "没有找到该用户的头像信息",
+      // });
+      //默认头像
+      avatarPath = `${AVATAR_PATH}/默认`
+    } else { avatarPath = `${AVATAR_PATH}/${avatarInfo.filename}`; }
+
     ctx.response.set("content-type", avatarInfo.mimeType);
     ctx.body = fs.createReadStream(avatarPath);
   }
